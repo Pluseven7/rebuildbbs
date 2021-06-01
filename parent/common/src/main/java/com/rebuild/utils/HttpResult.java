@@ -91,6 +91,9 @@ public class HttpResult<D> implements Serializable {
         return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleData);
     }
 
+    public static <D> HttpResult<D> successResponse(D singleData, long pageSize, Integer total) {
+        return new HttpResult(Code.SUCCESS.getCode(), singleData, pageSize, total);
+    }
 
     public static <D> HttpResult<D> successResponse(String message, D singleData) {
         return new HttpResult<>(Code.SUCCESS.getCode(), message, singleData);
