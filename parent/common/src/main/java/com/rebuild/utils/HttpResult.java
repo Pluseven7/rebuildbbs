@@ -27,7 +27,7 @@ public class HttpResult<D> implements Serializable {
     /**
      * 错误信息
      */
-    private String error;
+    private String msg;
 
     /**
      * 返回总页数
@@ -53,6 +53,17 @@ public class HttpResult<D> implements Serializable {
     }
 
     /**
+     * 请求成功并返回数据
+     * @param code
+     * @param data
+     */
+    public HttpResult(Integer code,String msg, D data){
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    /**
      * 请求成功并返回数据及分页信息
      */
     public HttpResult(Integer code, D data,long pageSize, Integer total){
@@ -65,22 +76,18 @@ public class HttpResult<D> implements Serializable {
     /**
      * 请求失败
      */
-    public HttpResult(Integer code, String error){
+    public HttpResult(Integer code, String msg){
         this.code = code;
-        this.error = error;
+        this.msg = msg;
     }
 
-    /**
-     * 请求失败并返回数据
-     */
-    public HttpResult(Integer code, String error, D data){
-        this.code = code;
-        this.data = data;
-        this.error = error;
-    }
 
     public static HttpResult successResponse(String message) {
         return new HttpResult(Code.SUCCESS.getCode(), message);
+    }
+
+    public static <D> HttpResult<D> successResponse(Integer code, D singleDate){
+        return new HttpResult(Code.SUCCESS.getCode(), singleDate);
     }
 
     public static HttpResult successResponse() {
