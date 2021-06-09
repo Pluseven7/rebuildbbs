@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rebuild.mapper.SysRoleMapper;
 import com.rebuild.model.SysRole;
 import com.rebuild.service.ISysRoleService;
+import com.rebuild.utils.Code;
 import com.rebuild.utils.HttpResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -57,12 +58,9 @@ public class SysRoleController {
     @PostMapping("/QueryUserRole")
     @ResponseBody
     public HttpResult getAll(Integer pageNo,Integer pageSize){
-//        Wrapper<SysRole> qw = new QueryWrapper<SysRole>()
-//                .isNotNull("id")
-//                .orderBy(false,false,"id");
-//        IPage result = service.selectpage(new Page<>(pageno,pagesize),qw);
         IPage<SysRole> iPage = mapper.selectPage(new Page<>(pageNo, pageSize),null);
-        return HttpResult.successResponse(iPage.getRecords()) ;
+
+        return HttpResult.successResponse(iPage.getRecords(),iPage.getPages(),iPage.getTotal()) ;
 
     }
 }

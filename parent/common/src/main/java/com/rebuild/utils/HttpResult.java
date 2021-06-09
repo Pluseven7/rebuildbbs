@@ -37,7 +37,7 @@ public class HttpResult<D> implements Serializable {
     /**
      * 本页返回条数
      */
-    private Integer total;
+    private long total;
 
 
     public HttpResult(){this(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg());}
@@ -66,8 +66,19 @@ public class HttpResult<D> implements Serializable {
     /**
      * 请求成功并返回数据及分页信息
      */
-    public HttpResult(Integer code, D data,long pageSize, Integer total){
+    public HttpResult(Integer code, D data,long pageSize, long total){
         this.code = code;
+        this.data = data;
+        this.pageSize = pageSize;
+        this.total = total;
+    }
+
+    /**
+     * 请求成功并返回数据及分页信息
+     */
+    public HttpResult(Integer code, String msg, D data, long pageSize, long total){
+        this.code = code;
+        this.msg = msg;
         this.data = data;
         this.pageSize = pageSize;
         this.total = total;
@@ -98,8 +109,8 @@ public class HttpResult<D> implements Serializable {
         return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleData);
     }
 
-    public static <D> HttpResult<D> successResponse(D singleData, long pageSize, Integer total) {
-        return new HttpResult(Code.SUCCESS.getCode(), singleData, pageSize, total);
+    public static <D> HttpResult<D> successResponse(D singleData, long pageSize, long total) {
+        return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleData, pageSize, total);
     }
 
     public static <D> HttpResult<D> successResponse(String message, D singleData) {
