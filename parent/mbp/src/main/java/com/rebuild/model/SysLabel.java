@@ -30,8 +30,8 @@ public class SysLabel extends Model {
     @ApiModelProperty(value = "板块名称")
     private String lbName;
 
-    @ApiModelProperty(value = "子版块id")
-    private Integer lbChilId;
+    @ApiModelProperty(value = "子版块数量")
+    private Integer lbChilnum;
 
     @ApiModelProperty(value = "管理员id")
     private Integer lbAdminId;

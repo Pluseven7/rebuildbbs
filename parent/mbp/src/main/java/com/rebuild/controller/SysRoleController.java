@@ -52,8 +52,8 @@ public class SysRoleController {
 
     @ApiOperation(value = "获取权限列表")
     @ApiImplicitParams ({
-        @ApiImplicitParam(name = "pageNo",paramType = "Integer",required = true),
-        @ApiImplicitParam(name = "pageSize",paramType = "Integer",required = true)
+        @ApiImplicitParam(name = "pageNo",value = "当前页数",paramType = "Integer",required = true),
+        @ApiImplicitParam(name = "pageSize",value = "每页长度",paramType = "Integer",required = true)
     })
     @PostMapping("/QueryUserRole")
     @ResponseBody
