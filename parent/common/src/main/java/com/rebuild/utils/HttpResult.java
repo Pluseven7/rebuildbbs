@@ -29,18 +29,9 @@ public class HttpResult<D> implements Serializable {
      */
     private String msg;
 
-    /**
-     * 返回总页数
-     */
-    private long pageSize;
 
-    /**
-     * 本页返回条数
-     */
-    private long total;
-
-
-    public HttpResult(){this(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg());}
+    public HttpResult() {
+    }
 
     /**
      * 请求成功并返回数据
@@ -51,6 +42,8 @@ public class HttpResult<D> implements Serializable {
         this.code = code;
         this.data = data;
     }
+
+
 
     /**
      * 请求成功并返回数据
@@ -63,26 +56,6 @@ public class HttpResult<D> implements Serializable {
         this.data = data;
     }
 
-    /**
-     * 请求成功并返回数据及分页信息
-     */
-    public HttpResult(Integer code, D data,long pageSize, long total){
-        this.code = code;
-        this.data = data;
-        this.pageSize = pageSize;
-        this.total = total;
-    }
-
-    /**
-     * 请求成功并返回数据及分页信息
-     */
-    public HttpResult(Integer code, String msg, D data, long pageSize, long total){
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-        this.pageSize = pageSize;
-        this.total = total;
-    }
 
     /**
      * 请求失败
@@ -93,12 +66,15 @@ public class HttpResult<D> implements Serializable {
     }
 
 
-    public static HttpResult successResponse(String message) {
+    public static HttpResult sendMessage(String message) {
         return new HttpResult(Code.SUCCESS.getCode(), message);
     }
 
     public static <D> HttpResult<D> successResponse(Integer code, D singleDate){
-        return new HttpResult(Code.SUCCESS.getCode(), singleDate);
+        return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleDate);
+    }
+    public static <D> HttpResult<D> successResponse(Integer code, String msg,D singleDate){
+        return new HttpResult(Code.SUCCESS.getCode(), msg, singleDate);
     }
 
     public static HttpResult successResponse() {
@@ -109,9 +85,6 @@ public class HttpResult<D> implements Serializable {
         return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleData);
     }
 
-    public static <D> HttpResult<D> successResponse(D singleData, long pageSize, long total) {
-        return new HttpResult(Code.SUCCESS.getCode(), Code.SUCCESS.getMsg(), singleData, pageSize, total);
-    }
 
     public static <D> HttpResult<D> successResponse(String message, D singleData) {
         return new HttpResult<>(Code.SUCCESS.getCode(), message, singleData);

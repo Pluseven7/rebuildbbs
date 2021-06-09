@@ -57,10 +57,10 @@ public class SysRoleController {
     })
     @PostMapping("/QueryUserRole")
     @ResponseBody
-    public HttpResult getAll(Integer pageNo,Integer pageSize){
+    public HttpResult<IPage> getAll(Integer pageNo,Integer pageSize){
         IPage<SysRole> iPage = mapper.selectPage(new Page<>(pageNo, pageSize),null);
 
-        return HttpResult.successResponse(iPage.getRecords(),iPage.getPages(),iPage.getTotal()) ;
+        return HttpResult.successResponse(iPage) ;
 
     }
 }
