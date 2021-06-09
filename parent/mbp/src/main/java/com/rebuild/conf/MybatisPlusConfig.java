@@ -1,13 +1,13 @@
-package conf;
+package com.rebuild.conf;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 配置分页插件
@@ -15,7 +15,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MapperScan("com.rebuild.mapper")
+@EnableTransactionManagement
 public class MybatisPlusConfig {
+
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -24,10 +26,7 @@ public class MybatisPlusConfig {
         return interceptor;
     }
 
-//    @Bean
-//    public ConfigurationCustomizer configurationCustomizer() {
-//        return configuration -> configuration.setUseDeprecatedExecutor(false);
-//    }
+
 
     }
 
