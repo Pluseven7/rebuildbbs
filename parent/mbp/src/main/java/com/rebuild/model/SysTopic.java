@@ -22,19 +22,19 @@ public class SysTopic extends Model {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "讨论主键")
+    @ApiModelProperty(value = "话题主键")
     private String tpId;
 
-    @ApiModelProperty(value = "讨论名称")
+    @ApiModelProperty(value = "话题名称")
     private String tpName;
 
     @ApiModelProperty(value = "楼主id")
     private Integer tpManagerId;
 
-    @ApiModelProperty(value = "讨论所属子版块id")
+    @ApiModelProperty(value = "话题所属子版块id")
     private Integer tpBdId;
 
-    @ApiModelProperty(value = "讨论活动id")
+    @ApiModelProperty(value = "话题活动id")
     private Integer tpModifyId;
 
     @ApiModelProperty(value = "删除标识")

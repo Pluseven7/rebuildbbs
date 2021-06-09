@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-06-09
  */
 public interface ISysModifyService extends IService<SysModify> {
-
+    SysModify newModifition(Integer id);
 }
