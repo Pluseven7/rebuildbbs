@@ -57,7 +57,7 @@ public class SysBoardController {
         ));
     }
 
-    @ApiOperation(value = "分页获取所选子版块的话题信息")
+    @ApiOperation(value = "分页获取所选子版块的帖子信息")
     @PostMapping("/pageThisTopic")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "bdId",value = "所选子板块id",required = true,paramType = "Integer"),

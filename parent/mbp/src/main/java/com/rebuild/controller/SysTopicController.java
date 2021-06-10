@@ -1,14 +1,31 @@
 package com.rebuild.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.rebuild.model.SysBoard;
+import com.rebuild.model.SysContent;
+import com.rebuild.model.SysLabel;
+import com.rebuild.model.SysTopic;
+import com.rebuild.service.ISysContentService;
+import com.rebuild.service.ISysModifyService;
+import com.rebuild.service.ISysTopicService;
+import com.rebuild.utils.HttpResult;
+import com.rebuild.vo.SysContentVo;
+import com.rebuild.vo.SysTopicVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * <p>
@@ -23,9 +40,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sys-topic")
 public class SysTopicController {
 
-//    //lb_id+bd_id+tp_id+id+mf_id=ct_id
-//    @ApiOperation(value = "新增帖子")
-//    @PostMapping("/createOne")
-//    @ApiImplicitParam(name = "bdId",value = "所选子板块id",paramType = "Integer")
-//    @ResponseBody
+    @Resource
+    private ISysModifyService sysModifyService;
+
+    @Resource
+    private ISysTopicService sysTopicService;
+
+    @Resource
+    private ISysContentService sysContentService;
+
+
+
+    //lb_id+bd_id+id+mf_id+ct_id=tp_id
+    @ApiOperation(value = "新增帖子")
+    @PostMapping("/createTopic")
+    @Transactional
+    @ResponseBody
+    public HttpResult createTopic(@RequestBody SysTopicVo sysTopicVo) {
+        //生成活动
+        sysTopicVo.setTpModifyId(sysModifyService.newTopic(sysTopicVo.getTpManagerId()).getMfId());
+        //生成帖子串号
+        String tpId = sysTopicVo.getLbId().toString()
+                +sysTopicVo.getTpBdId().toString()
+                +sysTopicVo.getTpManagerId().toString()
+                +sysTopicVo.getTpModifyId().toString();
+//                +sysTopicVo.getSysContentVo().getCtId();
+        sysTopicVo.setTpId(tpId);
+        sysTopicVo.getSysContentVo().setCtTpId(tpId);
+        //生成首楼回复
+        sysTopicVo.setSysContentVo(sysContentService.newContent(sysTopicVo.getSysContentVo(),
+                sysTopicVo.getLbId(),sysTopicVo.getTpBdId()));
+        //将tpId转换为串号+首楼帖串号的数据字段
+        tpId += sysTopicVo.getSysContentVo().getCtId();
+        sysTopicVo.setTpId(tpId);
+        sysTopicService.save(sysTopicVo);
+        SysTopic sysTopic = new SysTopic();
+        BeanUtils.copyProperties(sysTopicVo,sysTopic);
+        sysTopic = sysTopicService.getOne(new QueryWrapper<>(sysTopic));
+        return HttpResult.successResponse(sysTopic);
+    }
+
+    @ApiOperation(value = "打开帖子，分页回复")
+    @PostMapping("/pageOpenThis")
+    @ApiImplicitParam(name = "tpId",value = "所选帖子id",paramType = "Integer")
+    @ResponseBody
+    public HttpResult pageOpenThis(Integer tpId){
+        sysTopicService.getById(tpId);
+        return null;
+    }
+
 }

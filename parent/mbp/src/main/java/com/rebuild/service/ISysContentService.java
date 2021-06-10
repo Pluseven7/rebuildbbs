@@ -2,6 +2,8 @@ package com.rebuild.service;
 
 import com.rebuild.model.SysContent;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rebuild.vo.SysContentVo;
+
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysContentService extends IService<SysContent> {
 
+    SysContentVo newContent(SysContentVo sysContentVo, Integer lbId, Integer bdId);
 }

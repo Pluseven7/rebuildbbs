@@ -2,6 +2,7 @@ package com.rebuild.mapper;
 
 import com.rebuild.model.SysLabel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.rebuild.model.SysModify;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysLabelMapper extends BaseMapper<SysLabel> {
 
+    int insertAndID(SysModify sysModify);
 }

@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysModifyService extends IService<SysModify> {
     SysModify newModifition(Integer id);
+
+    SysModify newTopic(Integer id);
 }

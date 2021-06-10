@@ -8,11 +8,13 @@ import com.rebuild.model.SysLabel;
 import com.rebuild.model.SysTopic;
 import com.rebuild.service.*;
 import com.rebuild.utils.HttpResult;
+import com.rebuild.vo.SysContentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,29 +34,22 @@ import java.sql.Wrapper;
 public class SysContentController {
 
     @Resource
-    private ISysTopicService iSysTopicService;
+    private ISysContentService sysContentService;
+
     @Resource
-    private ISysBoardService iSysBoardService;
-    @Resource
-    private ISysLabelService iSysLabelService;
-    @Resource
-    private ISysModifyService iSysModifyService;
-    @Resource
-    private ISysContentService iSysContentService;
+    private ISysModifyService sysModifyService;
 
 
     //lb_id+bd_id+tp_id+id+mf_id=ct_id
-    @ApiOperation(value = "新增内容")
-    @PostMapping("/newOne")
-    @ApiImplicitParam(name = "sys_content", value = "内容", paramType = "body")
+    @Transactional
+    @ApiOperation(value = "新增回复")
+    @PostMapping("/newContent")
     @ResponseBody
-    public HttpResult newOne(@RequestBody Integer tpId, Integer id, SysContent sysContent){
-        Integer tpbdId = iSysTopicService.getOne(new QueryWrapper<SysTopic>().eq("tp_id",tpId)).getTpBdId();
-        Integer bdlbId = iSysBoardService.getOne(new QueryWrapper<SysBoard>().eq("bd_id",tpbdId)).getBdLbId();
-        Integer lbId = iSysLabelService.getOne(new QueryWrapper<SysLabel>().eq("lb_id",bdlbId)).getLbId();
-        Integer mfId = iSysModifyService.newModifition(id).getMfId();
-        sysContent.setCtId(Integer.toString(lbId+bdlbId+tpbdId+id+mfId));
-        iSysContentService.save(sysContent);
-        return HttpResult.successResponse(sysContent);
+    public HttpResult newContent(@RequestBody SysContentVo sysContentVo,
+                                 @RequestBody Integer lbId,
+                                 @RequestBody Integer bdId){
+        sysContentVo = sysContentService.newContent(sysContentVo, lbId, bdId);
+        sysContentVo.setCtModifyId(sysModifyService.newTopic(sysContentVo.getCtOwnerId()).getMfId());
+        return HttpResult.successResponse(sysContentVo);
     }
 }
