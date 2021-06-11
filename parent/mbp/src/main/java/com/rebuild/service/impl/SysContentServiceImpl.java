@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class SysContentServiceImpl extends ServiceImpl<SysContentMapper, SysContent> implements ISysContentService {
 
     @Override
-    public SysContentVo newContent(SysContentVo sysContentVo,Integer lbId,Integer bdId){
+    public SysContentVo newContent(SysContentVo sysContentVo,String lbId,String bdId){
         String ctId = lbId + bdId
                 +sysContentVo.getCtTpId()
                 +sysContentVo.getCtOwnerId().toString()
@@ -28,4 +28,6 @@ public class SysContentServiceImpl extends ServiceImpl<SysContentMapper, SysCont
         baseMapper.insert(sysContentVo);
         return sysContentVo;
     }
+
+
 }

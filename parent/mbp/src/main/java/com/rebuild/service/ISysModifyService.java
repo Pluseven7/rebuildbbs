@@ -15,4 +15,8 @@ public interface ISysModifyService extends IService<SysModify> {
     SysModify newModifition(Integer id);
 
     SysModify newTopic(Integer id);
+
+    void rtNumUp(Integer mfId);
+
+    void optimesUp(Integer mfId);
 }

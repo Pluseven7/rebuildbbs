@@ -3,10 +3,7 @@
 
 <mapper namespace="com.rebuild.mapper.SysModifyMapper">
 
-    <insert id="insertAndID" parameterType="com.rebuild.model.SysModify">
-        <selectKey keyProperty="mf_id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+    <insert id="insertAndID" parameterType="com.rebuild.model.SysModify" keyColumn="mf_id" keyProperty="mfId" useGeneratedKeys="true">
         INSERT INTO sys_modify
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <if test="mfId != null">
@@ -16,19 +13,19 @@
             mf_createtime,
         </if>
         <if test="mfCreaterId != null">
-            mf_createrId,
+            mf_creater_id,
         </if>
         <if test="mfLastevent != null">
             mf_lastevent,
         </if>
         <if test="mfLasteventId != null">
-            mf_lasteventId,
+            mf_lastevent_id,
         </if>
         <if test="mfDeletetime != null">
             mf_deletetime,
         </if>
         <if test="mfDeleterId != null">
-            mf_deleterId,
+            mf_deleter_id,
         </if>
         <if test="mfOptimes != null">
             mf_optimes,
@@ -37,40 +34,52 @@
             mf_rtnum,
         </if>
         <if test="remake != null">
-            remake,
+            remake
         </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         <if test="mfId != null">
-            #{mf_id,jdbcType=Integer},
+            #{mfId,jdbcType=INTEGER},
         </if>
         <if test="mfCreatetime != null">
-            #{mf_createtime,jdbcType=TIMESTAMP},
+            #{mfCreatetime,jdbcType=TIMESTAMP},
         </if>
         <if test="mfCreaterId != null">
-            #{mf_createrId,jdbcType=INTEGER},
+            #{mfCreaterId,jdbcType=INTEGER},
         </if>
         <if test="mfLastevent != null">
-            #{mf_lastevent,jdbcType=TIMESTAMP},
+            #{mfLastevent,jdbcType=TIMESTAMP},
         </if>
         <if test="mfLasteventId != null">
-            #{mf_lasteventId,jdbcType=INTEGER},
+            #{mfLasteventId,jdbcType=INTEGER},
         </if>
         <if test="mfDeletetime != null">
-            #{mf_deletetime,jdbcType=TIMESTAMP},
+            #{mfDeletetime,jdbcType=TIMESTAMP},
         </if>
         <if test="mfDeleterId != null">
-            #{mf_deleterId,jdbcType=INTEGER},
+            #{mfDeleterId,jdbcType=INTEGER},
         </if>
         <if test="mfOptimes != null">
-            #{mf_optimes,jdbcType=INTEGER},
+            #{mfOptimes,jdbcType=INTEGER},
         </if>
         <if test="mfRtnum != null">
-            #{mf_rtnum,jdbcType=INTEGER},
+            #{mfRtnum,jdbcType=INTEGER},
         </if>
         <if test="remake != null">
-            #{remake,jdbcType=VARCHAR},
+            #{remake,jdbcType=VARCHAR}
         </if>
         </trim>
     </insert>
+<!--    <insert id="insertAndID" parameterType="com.rebuild.model.SysModify">-->
+<!--        <selectKey keyProperty="mf_id" order="AFTER" resultType="java.lang.Integer">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+<!--        Insert INTO sys_modify-->
+<!--            (mf_id,mf_createtime,mf_createrId,mf_lastevent,mf_lasteventId,mf_deletetime,mf_deleterId,mf_optimes,mf_rtnum,remake)-->
+<!--        VALUES-->
+<!--             (#{mfId,jdbcType=INTEGER},#{mfCreatetime,jdbcType=TIMESTAMP},#{mfCreaterId,jdbcType=INTEGER}-->
+<!--             ,#{mfLastevent,jdbcType=TIMESTAMP},#{mfLasteventId,jdbcType=INTEGER},#{mfDeletetime,jdbcType=TIMESTAMP},#{mfDeleterId,jdbcType=INTEGER},-->
+<!--              #{mfOptimes,jdbcType=INTEGER},#{mfRtnum,jdbcType=INTEGER},#{remake,jdbcType=VARCHAR})-->
+<!--    </insert>-->
+
 </mapper>

@@ -39,16 +39,20 @@ public class SysContentController {
     @Resource
     private ISysModifyService sysModifyService;
 
+    private static Integer lbIdLength = 5;
 
+    private static Integer bdIdLength = 5;
+
+    private static Integer tpIdLength = 5;
     //lb_id+bd_id+tp_id+id+mf_id=ct_id
     @Transactional
-    @ApiOperation(value = "新增回复")
+    @ApiOperation(value = "新增回复",notes = "将lbid+bdid拼接后在ctId中返回")
     @PostMapping("/newContent")
     @ResponseBody
-    public HttpResult newContent(@RequestBody SysContentVo sysContentVo,
-                                 @RequestBody Integer lbId,
-                                 @RequestBody Integer bdId){
-        sysContentVo = sysContentService.newContent(sysContentVo, lbId, bdId);
+    public HttpResult newContent(@RequestBody SysContentVo sysContentVo){
+        String lbId = sysContentVo.getCtId().substring(0,lbIdLength);
+        String bdId = sysContentVo.getCtId().substring(lbIdLength,lbIdLength+bdIdLength);
+        sysContentVo = sysContentService.newContent(sysContentVo,lbId,bdId);
         sysContentVo.setCtModifyId(sysModifyService.newTopic(sysContentVo.getCtOwnerId()).getMfId());
         return HttpResult.successResponse(sysContentVo);
     }

@@ -3,17 +3,15 @@ package com.rebuild.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rebuild.model.SysBoard;
+import com.rebuild.model.SysLabel;
 import com.rebuild.service.ISysBoardService;
 import com.rebuild.service.ISysLabelService;
+import com.rebuild.service.ISysModifyService;
 import com.rebuild.utils.HttpResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -35,6 +33,9 @@ public class SysLabelController {
     @Resource
     private ISysBoardService sysBoardService;
 
+    @Resource
+    private ISysModifyService sysModifyService;
+
     @ApiOperation(value = "获取所有板块信息")
     @PostMapping("/getAllLabel")
     @ResponseBody
@@ -53,4 +54,18 @@ public class SysLabelController {
                 .eq("bd_lb_id",lbId)
         ));
     }
+
+    @ApiOperation(value = "新增主板块")
+    @PostMapping("/newLabel")
+    @ResponseBody
+    public HttpResult newLabel(@RequestBody SysLabel sysLabel){
+        sysLabel.setLbModifyId(sysModifyService.newModifition(sysLabel.getLbAdminId()).getMfId());
+        sysLabelService.newLabel(sysLabel);
+        return HttpResult.successResponse(sysLabel);
+    }
+
+    @ApiOperation(value = "修改主板块")
+    @PostMapping("/changeLabel")
+    @ResponseBody
+    public HttpResult changeLabel(){}
 }

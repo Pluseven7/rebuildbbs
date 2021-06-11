@@ -3,10 +3,7 @@ package com.rebuild.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.rebuild.model.SysBoard;
-import com.rebuild.model.SysContent;
-import com.rebuild.model.SysLabel;
-import com.rebuild.model.SysTopic;
+import com.rebuild.model.*;
 import com.rebuild.service.ISysContentService;
 import com.rebuild.service.ISysModifyService;
 import com.rebuild.service.ISysTopicService;
@@ -58,7 +55,8 @@ public class SysTopicController {
     @ResponseBody
     public HttpResult createTopic(@RequestBody SysTopicVo sysTopicVo) {
         //生成活动
-        sysTopicVo.setTpModifyId(sysModifyService.newTopic(sysTopicVo.getTpManagerId()).getMfId());
+        SysModify sysModify = sysModifyService.newTopic(sysTopicVo.getTpManagerId());
+        sysTopicVo.setTpModifyId(sysModify.getMfId());
         //生成帖子串号
         String tpId = sysTopicVo.getLbId().toString()
                 +sysTopicVo.getTpBdId().toString()
@@ -69,7 +67,7 @@ public class SysTopicController {
         sysTopicVo.getSysContentVo().setCtTpId(tpId);
         //生成首楼回复
         sysTopicVo.setSysContentVo(sysContentService.newContent(sysTopicVo.getSysContentVo(),
-                sysTopicVo.getLbId(),sysTopicVo.getTpBdId()));
+                sysTopicVo.getLbId().toString(),sysTopicVo.getTpBdId().toString()));
         //将tpId转换为串号+首楼帖串号的数据字段
         tpId += sysTopicVo.getSysContentVo().getCtId();
         sysTopicVo.setTpId(tpId);

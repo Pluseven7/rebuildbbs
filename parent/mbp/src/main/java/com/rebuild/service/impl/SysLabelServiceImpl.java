@@ -17,4 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLabelServiceImpl extends ServiceImpl<SysLabelMapper, SysLabel> implements ISysLabelService {
 
+    @Override
+    public SysLabel newLabel(SysLabel sysLabel) {
+        baseMapper.insertAndID(sysLabel);
+        return sysLabel;
+    }
 }

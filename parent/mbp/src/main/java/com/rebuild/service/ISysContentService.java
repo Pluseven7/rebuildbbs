@@ -15,5 +15,7 @@ import com.rebuild.vo.SysContentVo;
  */
 public interface ISysContentService extends IService<SysContent> {
 
-    SysContentVo newContent(SysContentVo sysContentVo, Integer lbId, Integer bdId);
+    SysContentVo newContent(SysContentVo sysContentVo, String lbId, String bdId);
+
+
 }

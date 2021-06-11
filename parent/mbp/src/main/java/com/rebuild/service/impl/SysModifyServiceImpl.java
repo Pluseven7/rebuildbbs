@@ -42,7 +42,18 @@ public class SysModifyServiceImpl extends ServiceImpl<SysModifyMapper, SysModify
         SysModify sysModify = newModifition(id);
         sysModify.setMfRtnum(1);
         sysModify.setMfOptimes(1);
+        baseMapper.updateById(sysModify);
         return sysModify;
+    }
+
+    @Override
+    public void rtNumUp(Integer mfId){
+        baseMapper.rtNumUp(mfId);
+    }
+
+    @Override
+    public void optimesUp(Integer mfId){
+        baseMapper.optimesUp(mfId);
     }
 
 
