@@ -5,7 +5,10 @@ import com.rebuild.mapper.SysContentMapper;
 import com.rebuild.service.ISysContentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rebuild.vo.SysContentVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysContentServiceImpl extends ServiceImpl<SysContentMapper, SysContent> implements ISysContentService {
+
 
     @Override
     public SysContentVo newContent(SysContentVo sysContentVo,String lbId,String bdId){

@@ -1,5 +1,6 @@
 package com.rebuild.service;
 
+import com.rebuild.model.SysBoard;
 import com.rebuild.model.SysModify;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,4 +20,10 @@ public interface ISysModifyService extends IService<SysModify> {
     void rtNumUp(Integer mfId);
 
     void optimesUp(Integer mfId);
+
+    SysModify autoUpdate(Integer mfid, Integer leid);
+
+    SysModify newContent(Integer id, String tpid);
+
+
 }

@@ -2,11 +2,15 @@ package com.rebuild.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.rebuild.model.*;
+import com.rebuild.qo.SysTopicQo;
 import com.rebuild.service.ISysContentService;
 import com.rebuild.service.ISysModifyService;
 import com.rebuild.service.ISysTopicService;
+import com.rebuild.service.impl.Auto;
 import com.rebuild.utils.HttpResult;
 import com.rebuild.vo.SysContentVo;
 import com.rebuild.vo.SysTopicVo;
@@ -15,6 +19,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +28,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -46,6 +53,8 @@ public class SysTopicController {
     @Resource
     private ISysContentService sysContentService;
 
+    @Autowired
+    private Auto auto;
 
 
     //lb_id+bd_id+id+mf_id+ct_id=tp_id
@@ -54,8 +63,9 @@ public class SysTopicController {
     @Transactional
     @ResponseBody
     public HttpResult createTopic(@RequestBody SysTopicVo sysTopicVo) {
+        Integer tpmId = sysTopicVo.getTpManagerId();
         //生成活动
-        SysModify sysModify = sysModifyService.newTopic(sysTopicVo.getTpManagerId());
+        SysModify sysModify = sysModifyService.newTopic(tpmId);
         sysTopicVo.setTpModifyId(sysModify.getMfId());
         //生成帖子串号
         String tpId = sysTopicVo.getLbId().toString()
@@ -75,16 +85,22 @@ public class SysTopicController {
         SysTopic sysTopic = new SysTopic();
         BeanUtils.copyProperties(sysTopicVo,sysTopic);
         sysTopic = sysTopicService.getOne(new QueryWrapper<>(sysTopic));
-        return HttpResult.successResponse(sysTopic);
+        List ls = new ArrayList();
+        ls.add(sysTopic);
+        ls.add(sysTopicVo.getSysContentVo());
+        //更新活动
+        ls.add(auto.auto(sysTopic));
+        return HttpResult.successResponse(ls);
     }
 
-    @ApiOperation(value = "打开帖子，分页回复")
+    @ApiOperation(value = "打开帖子，分页显示")
     @PostMapping("/pageOpenThis")
-    @ApiImplicitParam(name = "tpId",value = "所选帖子id",paramType = "Integer")
     @ResponseBody
-    public HttpResult pageOpenThis(Integer tpId){
-        sysTopicService.getById(tpId);
-        return null;
+    public HttpResult pageOpenThis(@RequestBody SysTopicQo sysTopicQo){
+
+        IPage<SysTopic> page = sysTopicService.page(new Page<>(sysTopicQo.getPage().getCurrent(),sysTopicQo.getPage().getSize()),new QueryWrapper<SysTopic>()
+                .eq("tp_id",sysTopicQo.getTpId()));
+        return HttpResult.successResponse(page);
     }
 
 }

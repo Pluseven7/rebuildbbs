@@ -12,7 +12,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/rebuild?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root
-
+  aop:
+    proxy-target-class: true
 
 mybatis-plus:
   configuration:

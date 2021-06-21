@@ -22,4 +22,11 @@ public class SysLabelServiceImpl extends ServiceImpl<SysLabelMapper, SysLabel> i
         baseMapper.insertAndID(sysLabel);
         return sysLabel;
     }
+
+    @Override
+    public void updateChilnum(Integer id){
+        SysLabel sysLabel = baseMapper.selectById(id);
+        sysLabel.setLbChilnum(sysLabel.getLbChilnum() +1);
+        baseMapper.updateById(sysLabel);
+    }
 }

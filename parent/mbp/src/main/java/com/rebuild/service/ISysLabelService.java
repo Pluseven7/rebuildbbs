@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ISysLabelService extends IService<SysLabel> {
 
     SysLabel newLabel(SysLabel sysLabel);
+
+    void updateChilnum(Integer id);
 }

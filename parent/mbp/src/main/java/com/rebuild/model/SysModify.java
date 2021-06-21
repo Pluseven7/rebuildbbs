@@ -1,5 +1,7 @@
 package com.rebuild.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 
@@ -25,7 +27,7 @@ public class SysModify extends Model {
 
     private static final long serialVersionUID = 1L;
 
-
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "活动主键")
     private Integer mfId;
 

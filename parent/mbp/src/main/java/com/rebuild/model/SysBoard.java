@@ -34,7 +34,7 @@ public class SysBoard extends Model {
     private String bdName;
 
     @ApiModelProperty(value = "版主id")
-    private String bdAdminId;
+    private Integer bdAdminId;
 
     @ApiModelProperty(value = "讨论数")
     private Integer bdTopicnum;

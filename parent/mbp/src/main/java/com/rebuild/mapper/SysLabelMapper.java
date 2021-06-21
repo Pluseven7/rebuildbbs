@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Insert;
  */
 public interface SysLabelMapper extends BaseMapper<SysLabel> {
 
-    @Insert("Insert INTO sys_Label (lb_id,lb_name,lb_chilnum,lb_admin_id,lb_permission,lb_modify_id)" +
+    @Insert("Insert INTO sys_label (lb_id,lb_name,lb_chilnum,lb_admin_id,lb_permission,lb_modify_id)" +
              "VALUES (#{lbId,jdbcType=INTEGER},#{lbName,jdbcType=VARCHAR},#{lbChilnum,jdbcType=INTEGER}," +
             "#{lbAdminId,jdbcType=INTEGER},#{lbPermission,jdbcType=INTEGER},#{lbModifyId,jdbcType=INTEGER})"
      )

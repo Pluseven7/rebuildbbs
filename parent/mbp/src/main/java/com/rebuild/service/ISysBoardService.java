@@ -2,6 +2,8 @@ package com.rebuild.service;
 
 import com.rebuild.model.SysBoard;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.rebuild.model.SysLabel;
+import org.apache.ibatis.annotations.Insert;
 
 /**
  * <p>
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysBoardService extends IService<SysBoard> {
 
+    SysBoard newBoard(SysBoard sysBoard);
+
+    void updateTopicnum(Integer id);
 }

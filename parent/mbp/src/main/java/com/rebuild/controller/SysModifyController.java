@@ -27,14 +27,8 @@ public class SysModifyController {
 
     @Resource
     private ISysModifyService sysModifyService;
-/*
-    @ApiOperation(value = "自动更新")
-    @PostMapping("/autoUpdateModify")
-    @ResponseBody
-    public HttpResult autoUpdateModify(){
 
-        return null;
-    }*/
+
     @ApiOperation(value = "测试回复数")
     @PostMapping("/testReturn")
     @ApiImplicitParam(name = "mfId",value = "活动id",dataType = "Integer")

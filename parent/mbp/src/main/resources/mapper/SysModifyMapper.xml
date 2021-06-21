@@ -6,9 +6,6 @@
     <insert id="insertAndID" parameterType="com.rebuild.model.SysModify" keyColumn="mf_id" keyProperty="mfId" useGeneratedKeys="true">
         INSERT INTO sys_modify
         <trim prefix="(" suffix=")" suffixOverrides=",">
-        <if test="mfId != null">
-            mf_id,
-        </if>
         <if test="mfCreatetime != null">
             mf_createtime,
         </if>
@@ -38,9 +35,6 @@
         </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-        <if test="mfId != null">
-            #{mfId,jdbcType=INTEGER},
-        </if>
         <if test="mfCreatetime != null">
             #{mfCreatetime,jdbcType=TIMESTAMP},
         </if>

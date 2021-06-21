@@ -4,20 +4,21 @@ package com.rebuild.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rebuild.model.SysBoard;
+import com.rebuild.model.SysLabel;
 import com.rebuild.model.SysTopic;
 import com.rebuild.service.ISysBoardService;
+import com.rebuild.service.ISysLabelService;
+import com.rebuild.service.ISysModifyService;
 import com.rebuild.service.ISysTopicService;
+import com.rebuild.service.impl.Auto;
 import com.rebuild.service.impl.SysTopicServiceImpl;
 import com.rebuild.utils.HttpResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -39,6 +40,12 @@ public class SysBoardController {
 
     @Resource
     private ISysTopicService sysTopicService;
+
+    @Resource
+    private ISysModifyService sysModifyService;
+
+    @Resource
+    private ISysLabelService sysLabelService;
 
     @ApiOperation(value = "获取所有子板块信息")
     @PostMapping("/getAllBoard")
@@ -64,7 +71,6 @@ public class SysBoardController {
         @ApiImplicitParam(name = "pageNo",value = "当前页数",required = true,paramType = "Integer"),
         @ApiImplicitParam(name = "pageSize",value = "每页长度",required = true,paramType = "Integer")
     })
-
     @ResponseBody
     public HttpResult pageThisTopic(Integer bdId,Integer pageNo,Integer pageSize){
         return HttpResult.successResponse(sysTopicService.page(new Page<>(pageNo,pageSize),new QueryWrapper<SysTopic>()
@@ -72,5 +78,14 @@ public class SysBoardController {
         ));
     }
 
-
+    @ApiOperation(value = "新增子板块")
+    @PostMapping("/newBoard")
+    @ResponseBody
+    @Transactional
+    public HttpResult newBoard(@RequestBody SysBoard sysBoard) {
+        sysBoard.setBdModifyId(sysModifyService.newModifition(sysBoard.getBdAdminId()).getMfId());
+        sysBoardService.newBoard(sysBoard);
+        sysLabelService.updateChilnum(sysBoard.getBdLbId());
+        return HttpResult.successResponse(sysBoard);
+    }
 }

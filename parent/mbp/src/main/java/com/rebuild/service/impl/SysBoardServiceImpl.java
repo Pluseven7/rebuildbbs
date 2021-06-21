@@ -2,9 +2,12 @@ package com.rebuild.service.impl;
 
 import com.rebuild.model.SysBoard;
 import com.rebuild.mapper.SysBoardMapper;
+import com.rebuild.model.SysLabel;
 import com.rebuild.service.ISysBoardService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -16,5 +19,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysBoardServiceImpl extends ServiceImpl<SysBoardMapper, SysBoard> implements ISysBoardService {
+
+    @Resource
+    private Auto auto;
+    @Override
+    public SysBoard newBoard(SysBoard sysBoard) {
+        baseMapper.insertAndID(sysBoard);
+        auto.auto(sysBoard);
+        return sysBoard;
+    }
+
+    @Override
+    public void updateTopicnum(Integer id){
+        SysBoard sysBoard = baseMapper.selectById(id);
+        sysBoard.setBdTopicnum(sysBoard.getBdTopicnum() +1);
+        baseMapper.updateById(sysBoard);
+    }
 
 }
