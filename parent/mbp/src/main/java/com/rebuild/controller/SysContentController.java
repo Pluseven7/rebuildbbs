@@ -50,8 +50,8 @@ public class SysContentController {
     @PostMapping("/newContent")
     @ResponseBody
     public HttpResult newContent(@RequestBody SysContentVo sysContentVo){
-        String lbId = sysContentVo.getCtId().substring(0,lbIdLength);
-        String bdId = sysContentVo.getCtId().substring(lbIdLength,lbIdLength+bdIdLength);
+        String lbId = sysContentVo.getCtTpId().substring(0,lbIdLength);
+        String bdId = sysContentVo.getCtTpId().substring(lbIdLength,lbIdLength+bdIdLength);
         sysContentVo.setCtModifyId(sysModifyService.newContent(sysContentVo.getCtOwnerId(), sysContentVo.getCtTpId()).getMfId());
         sysContentVo = sysContentService.newContent(sysContentVo,lbId,bdId);
         return HttpResult.successResponse(sysContentVo);

@@ -1,5 +1,6 @@
 package com.rebuild.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.SelectKey;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hjq
@@ -22,6 +23,7 @@ public class SysTopic extends Model {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
     @ApiModelProperty(value = "帖子主键")
     private String tpId;
 

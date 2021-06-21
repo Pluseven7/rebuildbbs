@@ -7,14 +7,12 @@ import com.rebuild.model.SysLabel;
 import com.rebuild.service.ISysBoardService;
 import com.rebuild.service.ISysLabelService;
 import com.rebuild.service.ISysModifyService;
-import com.rebuild.service.impl.Auto;
-import com.rebuild.service.impl.SysModifyServiceImpl;
 import com.rebuild.utils.Code;
 import com.rebuild.utils.HttpResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +40,7 @@ public class SysLabelController {
     @Resource
     private ISysModifyService sysModifyService;
 
-    @Autowired
-    private Auto auto;
+
 
     @ApiOperation(value = "获取所有板块信息")
     @PostMapping("/getAllLabel")
@@ -79,7 +76,7 @@ public class SysLabelController {
     @Transactional
     public HttpResult changeLabel(@RequestBody SysLabel sysLabel) {
         boolean result = sysLabelService.updateById(sysLabel);
-        List ls = auto.auto(sysLabel);
+        List ls = sysModifyService.auto(sysLabel);
         if (result&& ls!= null) {
             return HttpResult.successResponse(sysLabel);
         } else {

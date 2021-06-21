@@ -4,6 +4,8 @@ import com.rebuild.model.SysBoard;
 import com.rebuild.model.SysModify;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -25,5 +27,6 @@ public interface ISysModifyService extends IService<SysModify> {
 
     SysModify newContent(Integer id, String tpid);
 
+    List<SysModify> auto(Object model);
 
 }

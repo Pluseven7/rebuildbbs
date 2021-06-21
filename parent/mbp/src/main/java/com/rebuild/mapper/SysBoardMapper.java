@@ -15,9 +15,9 @@ import org.apache.ibatis.annotations.Insert;
  */
 public interface SysBoardMapper extends BaseMapper<SysBoard> {
 
-    @Insert("Insert INTO sys_board (bd_id,bd_name,bd_lb_id,bd_admin_id,bd_topicnum,bd_modify_id,bd_premission)" +
-            "VALUES (#{bdId,jdbcType=INTEGER},#{bdName,jdbcType=VARCHAR},#{bdLbId,jdbcType=INTEGER}," +
-            "#{bdAdminId,jdbcType=INTEGER},#{bdTopicnum,jdbcType=INTEGER},#{bdModifyId,jdbcType=INTEGER}),#{bdPremission,jdbcType=INTEGER}"
+    @Insert("Insert INTO sys_board (bd_name,bd_lb_id,bd_admin_id,bd_topicnum,bd_modify_id,bd_premission)" +
+            "VALUES (#{bdName,jdbcType=VARCHAR},#{bdLbId,jdbcType=INTEGER}," +
+            "#{bdAdminId,jdbcType=INTEGER},#{bdTopicnum,jdbcType=INTEGER},#{bdModifyId,jdbcType=INTEGER},#{bdPremission,jdbcType=INTEGER})"
     )
     int insertAndID(SysBoard sysBoard);
 }

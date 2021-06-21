@@ -4,14 +4,12 @@ package com.rebuild.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rebuild.model.SysBoard;
-import com.rebuild.model.SysLabel;
 import com.rebuild.model.SysTopic;
 import com.rebuild.service.ISysBoardService;
 import com.rebuild.service.ISysLabelService;
 import com.rebuild.service.ISysModifyService;
 import com.rebuild.service.ISysTopicService;
-import com.rebuild.service.impl.Auto;
-import com.rebuild.service.impl.SysTopicServiceImpl;
+
 import com.rebuild.utils.HttpResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -85,6 +83,7 @@ public class SysBoardController {
     public HttpResult newBoard(@RequestBody SysBoard sysBoard) {
         sysBoard.setBdModifyId(sysModifyService.newModifition(sysBoard.getBdAdminId()).getMfId());
         sysBoardService.newBoard(sysBoard);
+        sysModifyService.auto(sysBoard);
         sysLabelService.updateChilnum(sysBoard.getBdLbId());
         return HttpResult.successResponse(sysBoard);
     }

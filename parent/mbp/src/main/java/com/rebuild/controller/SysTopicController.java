@@ -4,30 +4,20 @@ package com.rebuild.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.rebuild.model.*;
 import com.rebuild.qo.SysTopicQo;
 import com.rebuild.service.ISysContentService;
 import com.rebuild.service.ISysModifyService;
 import com.rebuild.service.ISysTopicService;
-import com.rebuild.service.impl.Auto;
 import com.rebuild.utils.HttpResult;
-import com.rebuild.vo.SysContentVo;
 import com.rebuild.vo.SysTopicVo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +43,6 @@ public class SysTopicController {
     @Resource
     private ISysContentService sysContentService;
 
-    @Autowired
-    private Auto auto;
 
 
     //lb_id+bd_id+id+mf_id+ct_id=tp_id
@@ -89,7 +77,7 @@ public class SysTopicController {
         ls.add(sysTopic);
         ls.add(sysTopicVo.getSysContentVo());
         //更新活动
-        ls.add(auto.auto(sysTopic));
+        ls.add(sysModifyService.auto(sysTopic));
         return HttpResult.successResponse(ls);
     }
 
